@@ -28,7 +28,7 @@
 		<form action="${pageContext.request.contextPath }/login">
 			<div>
 				<h2>ID</h2>
-				<input type="text" id="id" name="mem_id" class="form-control" placeholder="아이디를 입력하세요">
+				<input type="text" id="id" name="mem_id" class="form-control" placeholder="아이디를 입력하세요" autofocus>
 			</div>
 			<div>
 				<h2>PASSWORD</h2>
@@ -40,6 +40,5 @@
 			</div>
 		</form>
 	</div>
-
 </body>
 </html>
