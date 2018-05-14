@@ -1,4 +1,4 @@
-package quest.board.first.test.member.dao;
+package quest.board.first.test.member;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ import quest.board.first.vo.MemberVO;
  *
  * </pre>
  */
-public class MemberTest {
+public class MemberDaoTest {
 
 	/**
 	 * Method : memberLoginTest
