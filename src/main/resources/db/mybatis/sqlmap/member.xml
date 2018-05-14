@@ -8,7 +8,7 @@
 	<select id="memberLogin" parameterType="MemberVO" resultType="MemberVO">
 		SELECT MEM_ID, MEM_ALIAS
 		FROM WEBMEMBER
-		WHERE MEM_ID = #{mem_id}
+		WHERE MEM_ID = #{mem_id} AND MEM_PASS = #{mem_pass}
 	</select>
 
 </mapper>
