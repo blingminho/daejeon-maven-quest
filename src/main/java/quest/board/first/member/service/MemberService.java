@@ -69,7 +69,9 @@ public class MemberService implements MemberServiceInf {
 	 */
 	@Override
 	public boolean loginYN(String mem_id, MemberVO memberVO) {
-		if (mem_id.equals(memberVO.getMem_id())) {
+		if (memberVO == null) {
+			return false;
+		} else if (mem_id.equals(memberVO.getMem_id())) {
 			return true;
 		}
 		return false;
