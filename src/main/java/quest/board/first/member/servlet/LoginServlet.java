@@ -59,9 +59,7 @@ public class LoginServlet extends HttpServlet {
 		if (flag) {
 			HttpSession session = request.getSession();
 			session.setAttribute("MemberVO", returnMemberVO);
-			request.setAttribute("choosePage", "tboardList");
 			request.getRequestDispatcher("/tboardList").forward(request, response);
-//			request.getRequestDispatcher("/board/boardNav.jsp").forward(request, response);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/home/login.jsp");
 		}

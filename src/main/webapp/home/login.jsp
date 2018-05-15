@@ -25,14 +25,14 @@
 </head>
 <body>
 	<div class="container">
-		<form action="${pageContext.request.contextPath }/login">
+		<form action="${pageContext.request.contextPath }/login" method="post">
 			<div>
 				<h2>ID</h2>
-				<input type="text" id="id" name="mem_id" class="form-control" placeholder="아이디를 입력하세요" autofocus>
+				<input type="text" id="id" name="mem_id" class="form-control" placeholder="아이디를 입력하세요" autofocus value="test_id_1">
 			</div>
 			<div>
 				<h2>PASSWORD</h2>
-				<input type="password" id="pass" name="mem_pass" class="form-control" placeholder="비밀번호를 입력하세요">
+				<input type="password" id="pass" name="mem_pass" class="form-control" placeholder="비밀번호를 입력하세요" value="test_pw_1">
 			</div>
 			<hr>
 			<div>

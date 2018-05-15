@@ -1,6 +1,6 @@
 package quest.board.first.member.service;
 
-import quest.board.first.member.dao.MemberDao;
+import quest.board.first.member.dao.tboardDao;
 import quest.board.first.member.dao.MemberDaoInf;
 import quest.board.first.vo.MemberVO;
 /**
@@ -26,7 +26,7 @@ public class MemberService implements MemberServiceInf {
 	private MemberDaoInf memberDao = null;
 	
 	private MemberService(){
-		memberDao = MemberDao.getInstance();
+		memberDao = tboardDao.getInstance();
 	}
 	
 	/**
