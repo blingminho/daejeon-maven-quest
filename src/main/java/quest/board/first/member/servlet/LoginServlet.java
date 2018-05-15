@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import quest.board.first.member.service.MemberService;
 import quest.board.first.member.service.MemberServiceInf;
@@ -42,6 +43,9 @@ public class LoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		String mem_id = request.getParameter("mem_id");
 		String mem_pass = request.getParameter("mem_pass");
 		
@@ -53,8 +57,11 @@ public class LoginServlet extends HttpServlet {
 		boolean flag = memberService.loginYN(mem_id, returnMemberVO);
 		
 		if (flag) {
-			request.getSession().setAttribute("MemberVO", returnMemberVO);
-			response.sendRedirect(request.getContextPath() + "/board/boardList.jsp");
+			HttpSession session = request.getSession();
+			session.setAttribute("MemberVO", returnMemberVO);
+			request.setAttribute("choosePage", "tboardList");
+			request.getRequestDispatcher("/tboardList").forward(request, response);
+//			request.getRequestDispatcher("/board/boardNav.jsp").forward(request, response);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/home/login.jsp");
 		}

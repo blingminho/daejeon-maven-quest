@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tboard">
+	
+	<!-- 게시판 리스트 가져옴 -->
+	<select id="getTboardList" resultType="TboardVO">
+		SELECT *
+		FROM TBOARD
+	</select>
+
+	<!-- 게시판 가져옴 -->
+	<select id="getTboard" parameterType="TboardVO" resultType="TboardVO">
+		SELECT *
+		FROM TBOARD
+		WHERE TBOARD_SEQ = #{tboard_seq}
+	</select>
+	
+	<!-- 게시판의 활성화여부 수정 -->
+	<update id="updateTboardYN" parameterType="TboardVO">
+		UPDATE TBOARD
+		SET TBOARD_DEL_YN = #{tboard_del_yn}
+		WHERE TBOARD_SEQ = #{tboard_seq} 
+	</update>
+	
+	<!-- 게시판 추가 -->
+	<insert id="insertTboard" parameterType="TboardVO">
+		INSERT INTO TBOARD (
+			TBOARD_SEQ, TBOARD_TITLE,
+			TBOARD_REG_DT, TBOARD_DEL_YN,
+			TBOARD_MEM_ID
+		)
+		VALUES (
+			TBOARD_SEQ.NEXTVAL, #{tboard_title}, 
+			SYSDATE, #{tboard_del_yn}, 
+			#{tboard_mem_id}
+		)		
+	</insert>
+</mapper>
