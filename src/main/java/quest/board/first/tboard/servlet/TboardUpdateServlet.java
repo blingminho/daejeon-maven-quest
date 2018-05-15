@@ -14,10 +14,10 @@ import quest.board.first.tboard.service.TboardServiceInf;
 import quest.board.first.vo.TboardVO;
 
 /**
- * TboardListServlet.java
+ * TboardUpdateServlet.java
  *
  * @author "K.S.J"
- * @since 2018. 5. 14.
+ * @since 2018. 5. 15.
  * @version 1.0
  * @see
  *
@@ -26,25 +26,41 @@ import quest.board.first.vo.TboardVO;
  *
  * 수정일 수정자 수정내용
  * ---------- ------ ------------------------
- * 2018. 5. 14. "K.S.J" 최초 생성
+ * 2018. 5. 15. "K.S.J" 최초 생성
  *
  * </pre>
  */
-@WebServlet("/tboardList")
-public class TboardListServlet extends HttpServlet {
+@WebServlet("/tboardUpdate")
+public class TboardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public TboardListServlet() {
+    public TboardUpdateServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		
+		String tboard_seq = request.getParameter("tboard_seq");
+		String tboard_del_yn = request.getParameter("tboard_del_yn");
+		
 		TboardServiceInf tboardService = TboardService.getInstance();
+		
+		TboardVO tboardVO = new TboardVO();
+		tboardVO.setTboard_seq(tboard_seq);
+		tboardVO.setTboard_del_yn(tboard_del_yn);
+		
+		int result = tboardService.updateTboardYN(tboardVO);
 		List<TboardVO> list = tboardService.getTboardList();
-		request.setAttribute("tboardList", list);
-		request.getRequestDispatcher("/board/tboardList.jsp").forward(request, response);
+		
+		if (result == 1) {
+			request.setAttribute("tboardList", list);
+			request.getRequestDispatcher("/board/tboardList.jsp").forward(request, response);
+		} else {
+			new Error("tboard updateTboardYN error").printStackTrace();
+		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

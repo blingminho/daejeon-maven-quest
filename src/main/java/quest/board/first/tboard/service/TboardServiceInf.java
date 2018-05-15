@@ -1,14 +1,14 @@
-package quest.board.first.tboard.dao;
+package quest.board.first.tboard.service;
 
 import java.util.List;
 
 import quest.board.first.vo.TboardVO;
 
 /**
- * TboardDaoInf.java
+ * TboardServiceInf.java
  *
  * @author "K.S.J"
- * @since 2018. 5. 14.
+ * @since 2018. 5. 15.
  * @version 1.0
  * @see
  *
@@ -21,7 +21,7 @@ import quest.board.first.vo.TboardVO;
  *
  * </pre>
  */
-public interface TboardDaoInf {
+public interface TboardServiceInf {
 	
 	/**
 	 * Method : getTboardList

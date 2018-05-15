@@ -1,7 +1,6 @@
 package quest.board.first.tboard.servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +13,10 @@ import quest.board.first.tboard.service.TboardServiceInf;
 import quest.board.first.vo.TboardVO;
 
 /**
- * TboardListServlet.java
+ * TboardInsertServlet.java
  *
  * @author "K.S.J"
- * @since 2018. 5. 14.
+ * @since 2018. 5. 15.
  * @version 1.0
  * @see
  *
@@ -26,25 +25,33 @@ import quest.board.first.vo.TboardVO;
  *
  * 수정일 수정자 수정내용
  * ---------- ------ ------------------------
- * 2018. 5. 14. "K.S.J" 최초 생성
+ * 2018. 5. 15. "K.S.J" 최초 생성
  *
  * </pre>
  */
-@WebServlet("/tboardList")
-public class TboardListServlet extends HttpServlet {
+@WebServlet("/tboardInsert")
+public class TboardInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public TboardListServlet() {
+    public TboardInsertServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
+		
+		String tboard_title = request.getParameter("tboard_title");
+		String tboard_mem_id = request.getParameter("tboard_mem_id");
+		
 		TboardServiceInf tboardService = TboardService.getInstance();
-		List<TboardVO> list = tboardService.getTboardList();
-		request.setAttribute("tboardList", list);
-		request.getRequestDispatcher("/board/tboardList.jsp").forward(request, response);
+		
+		TboardVO tboardVO = new TboardVO();
+		tboardVO.setTboard_title(tboard_title);
+		tboardVO.setTboard_mem_id(tboard_mem_id);
+		
+		int result = tboardService.insertTboard(tboardVO);
+		
+		response.sendRedirect(request.getContextPath() + "/tboardList");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -8,6 +8,7 @@
 	<typeAliases>
 		<typeAlias alias="MemberVO" type="quest.board.first.vo.MemberVO"/>
 		<typeAlias alias="TboardVO" type="quest.board.first.vo.TboardVO"/>
+		<typeAlias alias="BoardVO" type="quest.board.first.vo.BoardVO"/>
 		
 	</typeAliases>
 	
@@ -27,6 +28,7 @@
 	<mappers>
 		<mapper resource="db/mybatis/sqlmap/member.xml" />
 		<mapper resource="db/mybatis/sqlmap/tboard.xml" />
+		<mapper resource="db/mybatis/sqlmap/board.xml" />
 		
 		
 	</mappers>

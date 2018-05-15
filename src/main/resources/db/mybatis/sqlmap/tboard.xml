@@ -21,20 +21,18 @@
 	<update id="updateTboardYN" parameterType="TboardVO">
 		UPDATE TBOARD
 		SET TBOARD_DEL_YN = #{tboard_del_yn}
-		WHERE TBOARD_SEQ = #{tboard_seq} 
+		WHERE TBOARD_SEQ = #{tboard_seq}
 	</update>
 	
 	<!-- 게시판 추가 -->
 	<insert id="insertTboard" parameterType="TboardVO">
 		INSERT INTO TBOARD (
 			TBOARD_SEQ, TBOARD_TITLE,
-			TBOARD_REG_DT, TBOARD_DEL_YN,
-			TBOARD_MEM_ID
+			TBOARD_REG_DT, TBOARD_MEM_ID
 		)
 		VALUES (
 			TBOARD_SEQ.NEXTVAL, #{tboard_title}, 
-			SYSDATE, #{tboard_del_yn}, 
-			#{tboard_mem_id}
-		)		
+			SYSDATE, #{tboard_mem_id}
+		)
 	</insert>
 </mapper>
