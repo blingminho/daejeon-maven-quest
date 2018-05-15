@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import quest.board.first.member.dao.MemberDao;
+import quest.board.first.member.dao.tboardDao;
 import quest.board.first.member.dao.MemberDaoInf;
 import quest.board.first.vo.MemberVO;
 /**
@@ -36,7 +36,7 @@ public class MemberDaoTest {
 	@Test
 	public void memberLoginTest() {
 		/***Given***/
-		MemberDaoInf dao = MemberDao.getInstance();
+		MemberDaoInf dao = tboardDao.getInstance();
 
 		String mem_id = "test_id_1";
 		String mem_pass = "test_pw_1";
