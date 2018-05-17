@@ -73,4 +73,77 @@ public class BoardService implements BoardServiceInf {
 		return boardDao.getBoardListCount(board_tboard_seq);
 	}
 
+	/**
+	 * Method : insertBoard
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 일반적인 글쓰기(부모글 없음)
+	 */
+	@Override
+	public int insertBoard(BoardVO boardVO) {
+		return boardDao.insertBoard(boardVO);
+	}
+
+	/**
+	 * Method : insertBoardP
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 부모글에 계층형글쓰기
+	 */
+	@Override
+	public int insertBoardP(BoardVO boardVO) {
+		BoardVO resultBoardVO = getBoardInfo(boardVO.getBoard_p_seq());
+		boardVO.setBoard_group_seq(resultBoardVO.getBoard_group_seq());
+		
+		return boardDao.insertBoardP(boardVO);
+	}
+
+	/**
+	 * Method : getBoardInfo
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param board_seq
+	 * @return
+	 * Method 설명 : 게시글의 모든정보조회(게시글번호이용) - 계층형글쓰기에도 사용함
+	 */
+	@Override
+	public BoardVO getBoardInfo(String board_seq) {
+		return boardDao.getBoardInfo(board_seq);
+	}
+
+	/**
+	 * Method : updateBoard_del_yn
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param board_seq
+	 * @return
+	 * Method 설명 : 해당 게시글의 사용여부를 N으로 변경
+	 */
+	@Override
+	public int updateBoard_del_yn(String board_seq) {
+		return boardDao.updateBoard_del_yn(board_seq);
+	}
+	
+	/**
+	 * Method : updateBoard
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 해당 게시글 수정
+	 */
+	@Override
+	public int updateBoard(BoardVO boardVO) {
+		return boardDao.updateBoard(boardVO);
+	}
+
 }

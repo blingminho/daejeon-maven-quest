@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fileAdd">
+	<!-- 기본 게시글 입력 -->
+	<insert id="insertFileAdd" parameterType="FileAddVO">
+		INSERT INTO FILEADD
+		    (
+		    	FILE_SEQ, FILE_BOARD_SEQ, FILE_PATH
+		    )
+		VALUES
+		    (
+		    	FILE_SEQ.NEXTVAL, #{file_board_seq}, #{file_path}
+		    )
+	</insert>
+	
+	<!-- 해당 게시글의 모든 파일 가져옴 -->
+	<select id="getFileAdd" parameterType="String" resultType="FileAddVO">
+		SELECT *
+		FROM FILEADD
+		WHERE FILE_BOARD_SEQ = #{file_board_seq}
+	</select>
+	
+	<!-- 해당 파일seq의 파일변경 -->
+	<update id="updateFileAdd" parameterType="FileAddVO">
+		UPDATE FILEADD
+		SET FILE_PATH = #{file_path}
+		WHERE FILE_SEQ = #{file_seq} AND FILE_BOARD_SEQ = #{file_board_seq} 
+	</update>
+	
+</mapper>

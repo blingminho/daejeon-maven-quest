@@ -26,8 +26,11 @@ public class BoardListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String board_tboard_seq = request.getParameter("board_tboard_seq");
+		if (board_tboard_seq == null) {
+			board_tboard_seq = (String)request.getSession().getAttribute("board_tboard_seq");
+		}
+		
 		String pageNum = request.getParameter("pageNum");
 		
 		TboardServiceInf tboardService = TboardService.getInstance();
@@ -64,6 +67,8 @@ public class BoardListServlet extends HttpServlet {
 		if (count != 0) {
 			pageCount = (int) Math.ceil(count/10d);
 		}
+		
+		request.getSession().setAttribute("pageChoose", "BoardList");
 		
 		request.setAttribute("tboardList", tboardList);
 		request.setAttribute("tboardVO", tboardVO);

@@ -18,13 +18,17 @@
 			$('#tboardSelectForm').submit();
 		})
 		
+		$('.notInfo').on('click', function(){
+			alert('삭제된 게시글입니다')
+		})
+		
 	})
 </script>
 </head>
 <body>
 	<%@ include file="/layout/header.jsp" %>
 	<%@ include file="/layout/leftNav.jsp" %>
-
+	
 	<div class="container-fluid">
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">${tboardVO.tboard_title }</h2>
@@ -36,7 +40,7 @@
 				</select>
 				<button type="button" id="changeTboard" class="btn btn-sm btn-primary">게시판 이동</button>
 			</form>
-			<a href="${pageContext.request.contextPath }/board/boardInsert.jsp">게시글 추가</a>
+			<a href="${pageContext.request.contextPath }/board/boardInsert.jsp?tboard_title=${tboardVO.tboard_title }&tboard_seq=${tboardVO.tboard_seq }">게시글 추가</a>
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
@@ -52,15 +56,34 @@
 							<tr>
 								<td>${boardVO.board_seq }</td>
 								<td>
-									<c:forEach begin="1" end="${boardVO.LEVEL }" var="i">
-										<c:choose>
-											<c:when test="${i == boardVO.LEVEL && i != 1}">
-												<c:out value="L"/>
-											</c:when>
-											<c:otherwise>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise>
-										</c:choose>
-									</c:forEach>
-										${boardVO.board_title }
+									<c:choose>
+										<c:when test="${boardVO.board_del_yn != 'N' }">
+											<a href="boardInfo?board_seq=${boardVO.board_seq }&tboard_title=${tboardVO.tboard_title }">
+												<c:forEach begin="1" end="${boardVO.LEVEL }" var="i">
+													<c:choose>
+														<c:when test="${i == boardVO.LEVEL && i != 1}">
+															<c:out value="L"/>
+														</c:when>
+														<c:otherwise>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise>
+													</c:choose>
+												</c:forEach>
+												${boardVO.board_title }
+											</a>
+										</c:when>
+										<c:otherwise>
+											<p class="notInfo">
+												<c:forEach begin="1" end="${boardVO.LEVEL }" var="i">
+													<c:choose>
+														<c:when test="${i == boardVO.LEVEL && i != 1}">
+															<c:out value="L"/>
+														</c:when>
+														<c:otherwise>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise>
+													</c:choose>
+												</c:forEach>
+												${boardVO.board_title }
+											</p>
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td><fmt:formatDate value="${boardVO.board_reg_dt }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 								<td>${boardVO.board_mem_id }</td>
@@ -98,7 +121,12 @@
 							
 							
 							for(int i = 1; i <= pageCount; i++){
-								code += "<li class='page-item'><a class='page-link' href='boardList?pageNum="
+								if(i != pageNum) {
+									code += "<li class='page-item'>";
+								} else {
+									code += "<li class='page-item active'>";
+								}
+								code += "<a class='page-link' href='boardList?pageNum="
 										+ i + "&board_tboard_seq=" + tboard_seq + "'>" + i + "</a></li>";
 							}
 							

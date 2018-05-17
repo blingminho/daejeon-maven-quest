@@ -6,15 +6,14 @@ import java.util.List;
 
 import org.junit.Test;
 
-import quest.board.first.board.dao.BoardDao;
-import quest.board.first.board.dao.BoardDaoInf;
+import quest.board.first.board.service.*;
 import quest.board.first.vo.BoardVO;
 
 /**
- * BoardDaoTest.java
+ * BoardServiceTest.java
  *
  * @author "K.S.J"
- * @since 2018. 5. 15.
+ * @since 2018. 5. 16.
  * @version 1.0
  * @see
  *
@@ -23,15 +22,15 @@ import quest.board.first.vo.BoardVO;
  *
  * 수정일 수정자 수정내용
  * ---------- ------ ------------------------
- * 2018. 5. 15. "K.S.J" 최초 생성
+ * 2018. 5. 16. "K.S.J" 최초 생성
  *
  * </pre>
  */
-public class BoardDaoTest {
-	
+public class BoardServiceTest {
+
 	/**
 	 * Method : getBoardPagingListTest
-	 * 최초작성일 : 2018. 5. 15.
+	 * 최초작성일 : 2018. 5. 16.
 	 * 작성자 : "K.S.J"
 	 * 변경이력 :
 	 * Method 설명 : getBoardPagingList Test
@@ -39,12 +38,12 @@ public class BoardDaoTest {
 	@Test
 	public void getBoardPagingListTest() {
 		/***Given***/
-		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardServiceInf boardService = BoardService.getInstance();
 		String board_tboard_seq = "1";
 		String pageNum = "1";
 
 		/***When***/
-		List<BoardVO> list = boardDao.getBoardPagingList(board_tboard_seq, pageNum);
+		List<BoardVO> list = boardService.getBoardPagingList(board_tboard_seq, pageNum);
 		
 		/***Then***/
 		assertEquals(10, list.size());
@@ -59,11 +58,11 @@ public class BoardDaoTest {
 	 */
 	public void getBoardListCountTest() {
 		/***Given***/
-		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardServiceInf boardService = BoardService.getInstance();
 		String board_tboard_seq = "1"; 
 
 		/***When***/
-		int result = boardDao.getBoardListCount(board_tboard_seq);
+		int result = boardService.getBoardListCount(board_tboard_seq);
 		
 		/***Then***/
 		assertEquals(10, result);
@@ -79,7 +78,7 @@ public class BoardDaoTest {
 	@Test
 	public void insertBoardTest() {
 		/***Given***/
-		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardServiceInf boardService = BoardService.getInstance();
 		String board_tboard_seq = "1";
 		String board_title = "board_title";
 		String board_content = "board_content";
@@ -92,7 +91,7 @@ public class BoardDaoTest {
 		boardVO.setBoard_mem_id(board_mem_id);
 		
 		/***When***/
-		int result = boardDao.insertBoard(boardVO);
+		int result = boardService.insertBoard(boardVO);
 		
 		/***Then***/
 		assertEquals(1, result);
@@ -108,7 +107,7 @@ public class BoardDaoTest {
 	@Test
 	public void insertBoardPTest() {
 		/***Given***/
-		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardServiceInf boardService = BoardService.getInstance();
 		String board_tboard_seq = "1";
 		String board_title = "board_title_p";
 		String board_content = "board_content_p";
@@ -123,10 +122,10 @@ public class BoardDaoTest {
 		boardVO.setBoard_p_seq(board_p_seq);
 		
 		/***When***/
-		BoardVO resultBoardVO = boardDao.getBoardInfo(boardVO.getBoard_p_seq());
+		BoardVO resultBoardVO = boardService.getBoardInfo(boardVO.getBoard_p_seq());
 		boardVO.setBoard_group_seq(resultBoardVO.getBoard_group_seq());
 		
-		int result = boardDao.insertBoardP(boardVO);
+		int result = boardService.insertBoardP(boardVO);
 		
 		/***Then***/
 		assertEquals(1, result);
@@ -143,11 +142,11 @@ public class BoardDaoTest {
 	@Test
 	public void getBoardInfoTest() {
 		/***Given***/
-		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardServiceInf boardService = BoardService.getInstance();
 		String board_seq = "1";
 		
 		/***When***/
-		BoardVO returnBoardVO = boardDao.getBoardInfo(board_seq);
+		BoardVO returnBoardVO = boardService.getBoardInfo(board_seq);
 		
 		/***Then***/
 		assertEquals(board_seq, returnBoardVO.getBoard_seq());
@@ -155,6 +154,5 @@ public class BoardDaoTest {
 		assertEquals(board_seq, returnBoardVO.getBoard_group_seq());
 	}
 	
-	
-	
+
 }

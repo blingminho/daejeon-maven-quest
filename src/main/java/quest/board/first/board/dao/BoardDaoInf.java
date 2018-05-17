@@ -45,5 +45,58 @@ public interface BoardDaoInf {
 	 */
 	int getBoardListCount(String board_tboard_seq);
 	
+	/**
+	 * Method : insertBoard
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 일반적인 글쓰기(부모글 없음)
+	 */
+	int insertBoard(BoardVO boardVO);
 	
+	/**
+	 * Method : insertBoardP
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 부모글에 계층형글쓰기
+	 */
+	int insertBoardP(BoardVO boardVO);
+	
+	/**
+	 * Method : getBoardInfo
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param board_seq
+	 * @return
+	 * Method 설명 : 게시글의 모든정보조회(게시글번호이용) - 계층형글쓰기에도 사용함
+	 */
+	BoardVO getBoardInfo(String board_seq);
+	
+	/**
+	 * Method : updateBoard_del_yn
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param board_seq
+	 * @return
+	 * Method 설명 : 해당 게시글의 사용여부를 N으로 변경
+	 */
+	int updateBoard_del_yn(String board_seq);
+	
+	/**
+	 * Method : updateBoard
+	 * 최초작성일 : 2018. 5. 16.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * @param boardVO
+	 * @return
+	 * Method 설명 : 해당 게시글 수정
+	 */
+	int updateBoard(BoardVO boardVO);
 }
