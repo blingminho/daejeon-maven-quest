@@ -155,6 +155,27 @@ public class BoardDaoTest {
 		assertEquals(board_seq, returnBoardVO.getBoard_group_seq());
 	}
 	
-	
+	/**
+	 * Method : updateBoardTest
+	 * 최초작성일 : 2018. 5. 18.
+	 * 작성자 : "K.S.J"
+	 * 변경이력 :
+	 * Method 설명 :
+	 */
+	@Test
+	public void updateBoardTest() {
+		/***Given***/
+		BoardDaoInf boardDao = BoardDao.getInstance();
+		BoardVO boardVO = new BoardVO();
+		boardVO.setBoard_seq("1");
+		boardVO.setBoard_title("test");
+		boardVO.setBoard_content("test content");
+		
+		/***When***/
+		int result = boardDao.updateBoard(boardVO);
+
+		/***Then***/
+		assertEquals(1, result);
+	}
 	
 }

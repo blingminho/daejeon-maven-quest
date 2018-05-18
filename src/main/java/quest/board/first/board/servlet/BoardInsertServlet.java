@@ -57,37 +57,37 @@ public class BoardInsertServlet extends HttpServlet {
 		//파일 처리 부분
 		Collection<Part> parts = request.getParts();
 		for (Part part : parts) {
+			
 			if (part.getName().equals("file_path")) {
 				String file_path = "";
-				if (part.getSize() > 0) {
 					
-					String contentDisposition = part.getHeader("Content-Disposition");
-					String[] headers = contentDisposition.split(";");
-					//form-data;
-					// name="profile";
-					// filename="test.html"
-					
-					String fileName = null;
-					for (String header : headers) {
-						if (header.startsWith(" filename=")) {
-							fileName = header.substring(header.lastIndexOf("."), header.length()-1);
-							break;
-						}
+				String contentDisposition = part.getHeader("Content-Disposition");
+				System.out.println("contentDisposition : " + contentDisposition);
+				String[] headers = contentDisposition.split(";");
+				//form-data;
+				// name="file_path";
+				// filename="test.html"
+				
+				String fileName = null;
+				for (String header : headers) {
+					if (header.startsWith(" filename=")) {
+						fileName = header.substring(header.lastIndexOf("."), header.length()-1);
+						break;
 					}
-					
-					fileName = UUID.randomUUID().toString() + fileName;
-					file_path = UPLOAD_PATH + "/" + fileName;
-					part.write(file_path);
-					part.delete();
-					
-					FileAddVO fileAddVO = new FileAddVO();
-					String file_board_seq = boardVO.getBoard_seq();
-					fileAddVO.setFile_board_seq(file_board_seq);
-					fileAddVO.setFile_path(fileName);
-					
-					FileAddServiceInf fileAddService = FileAddService.getInstance();
-					fileAddService.insertFileAdd(fileAddVO);
 				}
+				
+				fileName = UUID.randomUUID().toString() + fileName;
+				file_path = UPLOAD_PATH + "/" + fileName;
+				part.write(file_path);
+				part.delete();
+				
+				FileAddVO fileAddVO = new FileAddVO();
+				String file_board_seq = boardVO.getBoard_seq();
+				fileAddVO.setFile_board_seq(file_board_seq);
+				fileAddVO.setFile_path(fileName);
+				
+				FileAddServiceInf fileAddService = FileAddService.getInstance();
+				fileAddService.insertFileAdd(fileAddVO);
 			}
 		}
 		

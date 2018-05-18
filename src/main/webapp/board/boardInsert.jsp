@@ -45,6 +45,16 @@ $(document).ready(function() {
 			}
 		}
 	})
+	
+	//파일수 limit
+	$('#file').on('change', function() {
+		if($('#file')[0].files.length > 5) {
+			alert("최대 5개의 파일만 저장 가능합니다");
+			$('#file').val('');
+		}
+	})
+	
+	
 });
 
 // 필수값 Check
@@ -99,11 +109,7 @@ function validation(){
 							<th>첨부파일</th>
 							<td></td>
 						</tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
+						<tr><td><input type="file" name="file_path" id="file" multiple></td><td></td></tr>
 					</table>
 					<input type="hidden" name="board_tboard_seq" value="${tboard_seq }">
 					<input type="hidden" name="board_p_seq" value="${board_p_seq }">

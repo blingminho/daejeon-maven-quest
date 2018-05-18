@@ -38,13 +38,31 @@ $(document).ready(function() {
 		if(confirm("저장하시겠습니까?")) {
 			// id가 smarteditor인 textarea에 에디터에서 대입
 			oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
-
+			
+			//checkbox 파악 그리고 파일 수 파악
+			var chkBox = $('.chkBox:checked');
+			chkBox.length;
+			if ($('.chkBox').attr()) {
+				return;
+			}
+			
+			
 			// 이부분에 에디터 validation 검증
 			if(validation()) {
 				$('form').submit();
 			}
 		}
 	})
+	
+	//파일수 limit
+	$('#file').on('change', function() {
+		if($('#file')[0].files.length > 5) {
+			alert("최대 5개의 파일만 저장 가능합니다");
+			$('#file').val('');
+		}
+	})
+	
+	
 });
 
 // 필수값 Check
@@ -68,15 +86,12 @@ function validation(){
 <body>
 	<%@ include file="/layout/header.jsp" %>
 	<%@ include file="/layout/leftNav.jsp" %>
-	<%
-		request.setAttribute("boardVO", request.getParameter("boardVO"));
-		request.setAttribute("tboard_title", request.getParameter("tboard_title"));
-	%>
+	
 	<div class="container-fluid">
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">게시글 수정 - ${tboard_title }</h2>
 			<div class="table-responsive">
-				<form action="${pageContext.request.contextPath }/boardInsert" enctype="multipart/form-data" method="post">
+				<form action="${pageContext.request.contextPath }/boardUpdate" enctype="multipart/form-data" method="get">
 					<table class="table table-striped">
 						<tr>
 							<th>부모 게시글 번호</th>
@@ -88,28 +103,30 @@ function validation(){
 						</tr>
 						<tr>
 							<th>게시글 작성자아이디</th>
-							<td>${MemberVO.mem_id}</td>
+							<td>${boardVO.board_mem_id}</td>
 						</tr>
 						<tr>
 							<th>게시글 내용</th>
-							<td><textarea id="smarteditor" rows="15" cols="150" style="width:766px; height:412px;" name="board_content" value="${boardVO.board_content }"></textarea></td> 
+							<td><textarea id="smarteditor" rows="15" cols="150" style="width:766px; height:412px;" name="board_content">${boardVO.board_content }</textarea></td> 
 						</tr>
 						<tr>
-							<th>첨부파일</th>
-							<td></td>
+							<th>첨부파일<br>(체크해제후 수정시 삭제됩니다)</th>
+							<td>
+								<%int i = 0; %>
+								<div>
+								<c:forEach items="${fileAddVOList}" var="fileAddVO">
+									<div>
+										<input type="checkbox" checked="checked" class="chkBox"> : ${fileAddVO.file_path}
+									</div>
+								</c:forEach>
+								</div>
+							</td>
 						</tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
-						<tr><td><input type="file" name="file_path"></td><td></td></tr>
+						<tr><td><input type="file" name="file_path" id="file" multiple="multiple"></td><td></td></tr>
 					</table>
-					<input type="hidden" name="board_tboard_seq" value="${tboard_seq }">
-					<input type="hidden" name="board_p_seq" value="${board_p_seq }">
-					<input type="hidden" value="${MemberVO.mem_id}" name="board_mem_id">
+					<input type="hidden" name="board_seq" value="${boardVO.board_seq }">
 				</form>
-				<input type="button" id="savebutton" value="게시글 작성" />
-				
+				<input type="button" id="savebutton" value="게시글 수정" />
 			</div>
 		</div>
 	</div>

@@ -2,13 +2,17 @@ package quest.board.first.board.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import quest.board.first.board.service.BoardService;
 import quest.board.first.board.service.BoardServiceInf;
@@ -34,15 +38,20 @@ import quest.board.first.vo.FileAddVO;
  *
  * </pre>
  */
+@MultipartConfig(maxFileSize=1024*1000*3, maxRequestSize=1024*1000*3*5)
 @WebServlet("/boardUpdate")
 public class BoardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final String UPLOAD_PATH = "D:/A_TeachingMaterial/7.JspSpring/uploadStorage";
+	
     public BoardUpdateServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
 		String board_seq = request.getParameter("board_seq");
 		String board_title = request.getParameter("board_title");
 		String board_content = request.getParameter("board_content");
@@ -54,15 +63,51 @@ public class BoardUpdateServlet extends HttpServlet {
 		boardVO.setBoard_content(board_content);
 		boardService.updateBoard(boardVO);
 		
-		FileAddServiceInf fileAddService = FileAddService.getInstance();
 		
+		
+		//파일 처리 부분
 		List<FileAddVO> fileAddVOList = new ArrayList<FileAddVO>();
+		Collection<Part> parts = request.getParts();
+		for (Part part : parts) {
+			if (part.getName().equals("file_path")) {
+				String file_path = "";
+					
+				String contentDisposition = part.getHeader("Content-Disposition");
+				System.out.println("contentDisposition : " + contentDisposition);
+				String[] headers = contentDisposition.split(";");
+				//form-data;
+				// name="file_path";
+				// filename="test.html"
+				
+				String fileName = null;
+				for (String header : headers) {
+					if (header.startsWith(" filename=")) {
+						fileName = header.substring(header.lastIndexOf("."), header.length()-1);
+						break;
+					}
+				}
+				
+				fileName = UUID.randomUUID().toString() + fileName;
+				file_path = UPLOAD_PATH + "/" + fileName;
+				part.write(file_path);
+				part.delete();
+				
+				FileAddVO fileAddVO = new FileAddVO();
+				String file_board_seq = boardVO.getBoard_seq();
+				fileAddVO.setFile_board_seq(file_board_seq);
+				fileAddVO.setFile_path(fileName);
+				
+				fileAddVOList.add(fileAddVO);
+			}
+		}
+		
+		FileAddServiceInf fileAddService = FileAddService.getInstance();
 		fileAddService.updateFileAdd(fileAddVOList);
 		
 		
-		//해당 게시판 상세화면으로 이동
-//		request.getSession().setAttribute("board_tboard_seq", board_tboard_seq);
-//		response.sendRedirect(request.getContextPath() + "/boardList");
+		//해당 게시글 상세화면으로 이동
+		response.sendRedirect(request.getContextPath() + "/boardInfo?board_seq=" + board_seq);
+//		request.getRequestDispatcher("/boardInfo?board_seq=" + board_seq).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

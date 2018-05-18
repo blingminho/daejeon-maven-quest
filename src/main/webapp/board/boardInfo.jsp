@@ -31,13 +31,8 @@
 			&board_p_seq=${boardVO.board_seq}">게시글 달기</a>
 			
 			<c:if test="${boardVO.board_mem_id == MemberVO.mem_id}">
-				<a class="btn btn-sm btn-warning" 
-				href="board/boardUpdate.jsp?boardVO=${boardVO}
-				&tboard_title=${tboard_title}">게시글 수정</a>
-				<%-- 
-				board_tboard_title=${tboard_title }
-				&board_seq=${boardVO.board_seq }&board_">게시글 수정</a>
-				 --%>
+				<a class="btn btn-sm btn-warning" href="boardUpdatePage?board_seq=${boardVO.board_seq}">게시글 수정</a>
+				
 				
 				<a class="btn btn-sm btn-danger" 
 				href="boardDelete?board_tboard_seq=${boardVO.board_tboard_seq}
