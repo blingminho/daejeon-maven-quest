@@ -74,27 +74,25 @@ public class FileAddDaoTest {
 	}
 	
 	/**
-	 * Method : updateFileAddTest
-	 * 최초작성일 : 2018. 5. 16.
+	 * Method : deleteFileAddTest
+	 * 최초작성일 : 2018. 5. 19.
 	 * 작성자 : "K.S.J"
 	 * 변경이력 :
-	 * Method 설명 :
+	 * Method 설명 : 파일삭제 테스트
 	 */
 	@Test
-	public void updateFileAddTest() {
+	public void deleteFileAddTest() {
 		/***Given***/
 		FileAddDaoInf dao = FileAddDao.getInstance();
-		String file_seq = "1";
 		String file_board_seq = "1";
-		String file_path = "test";
 		
-		FileAddVO fileAddVO = new FileAddVO(file_seq, file_board_seq, file_path);
 		
 		/***When***/
-		int result = dao.updateFileAdd(fileAddVO);
+		int expected = dao.getFileAdd(file_board_seq).size();
+		int result = dao.deleteFileAdd(file_board_seq);
 
 		/***Then***/
-		assertEquals(1, result);
+		assertEquals(expected, result);
 	}
 	
 	
