@@ -86,18 +86,18 @@ public class FileAddDao implements FileAddDaoInf {
 	}
 
 	/**
-	 * Method : updateFileAdd
+	 * Method : deleteFileAdd
 	 * 최초작성일 : 2018. 5. 16.
 	 * 작성자 : "K.S.J"
 	 * 변경이력 :
-	 * @param fileAddVOList
+	 * @param file_board_seq
 	 * @return
-	 * Method 설명 : 해당 게시글의 모든 파일 목록을 이용하여 업데이트
+	 * Method 설명 : 해당 게시글의 파일을 제거
 	 */
 	@Override
-	public int updateFileAdd(FileAddVO fileAddVO) {
+	public int deleteFileAdd(String file_board_seq) {
 		SqlSession sqlSession = sqlSessionFactory.openSession();
-		int result = sqlSession.update("fileAdd.updateFileAdd", fileAddVO);
+		int result = sqlSession.delete("fileAdd.deleteFileAdd", file_board_seq);
 		sqlSession.commit();
 		sqlSession.close();
 		

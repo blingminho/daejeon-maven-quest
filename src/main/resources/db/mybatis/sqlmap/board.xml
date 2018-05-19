@@ -84,7 +84,7 @@
 	<!-- 게시글 수정하기 -->
 	<update id="updateBoard" parameterType="BoardVO">
 		UPDATE BOARD
-		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}, BOARD_REG_DT = SYSDATE
+		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
 		WHERE BOARD_SEQ = #{board_seq}
 	</update>
 </mapper>

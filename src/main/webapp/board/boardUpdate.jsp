@@ -42,7 +42,10 @@ $(document).ready(function() {
 			//checkbox 파악 그리고 파일 수 파악
 			var chkBox = $('.chkBox:checked');
 			chkBox.length;
-			if ($('.chkBox').attr()) {
+			var fileCount = $('.chkBox:checked').length + $('#file')[0].files.length;
+			if (fileCount > 5) {
+				alert("최대 5개의 파일만 저장 가능합니다");
+				$('#file').val('');
 				return;
 			}
 			
@@ -56,7 +59,7 @@ $(document).ready(function() {
 	
 	//파일수 limit
 	$('#file').on('change', function() {
-		if($('#file')[0].files.length > 5) {
+		if(($('.chkBox:checked').length + $('#file')[0].files.length) > 5) {
 			alert("최대 5개의 파일만 저장 가능합니다");
 			$('#file').val('');
 		}
@@ -91,7 +94,7 @@ function validation(){
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">게시글 수정 - ${tboard_title }</h2>
 			<div class="table-responsive">
-				<form action="${pageContext.request.contextPath }/boardUpdate" enctype="multipart/form-data" method="get">
+				<form action="${pageContext.request.contextPath }/boardUpdate" enctype="multipart/form-data" method="post">
 					<table class="table table-striped">
 						<tr>
 							<th>부모 게시글 번호</th>
@@ -116,7 +119,7 @@ function validation(){
 								<div>
 								<c:forEach items="${fileAddVOList}" var="fileAddVO">
 									<div>
-										<input type="checkbox" checked="checked" class="chkBox"> : ${fileAddVO.file_path}
+										<input type="checkbox" checked="checked" class="chkBox" name="chkBox" value="${fileAddVO.file_path}"> : ${fileAddVO.file_path}
 									</div>
 								</c:forEach>
 								</div>

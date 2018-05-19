@@ -45,14 +45,14 @@ public interface FileAddServiceInf {
 	List<FileAddVO> getFileAdd(String file_board_seq);
 	
 	/**
-	 * Method : updateFileAdd
+	 * Method : deleteFileAdd
 	 * 최초작성일 : 2018. 5. 16.
 	 * 작성자 : "K.S.J"
 	 * 변경이력 :
-	 * @param fileAddVOList
+	 * @param file_board_seq
 	 * @return
-	 * Method 설명 : 해당 게시글의 모든 파일 목록을 이용하여 업데이트
+	 * Method 설명 : 해당 게시글의 파일을 제거
 	 */
-	int updateFileAdd(List<FileAddVO> fileAddVOList);
+	int deleteFileAdd(String file_board_seq);
 	
 }

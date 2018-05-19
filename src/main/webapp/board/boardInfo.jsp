@@ -10,8 +10,28 @@
 <%@include file="/include/jquery.jsp"%>
 <%@include file="/include/bootstrap.jsp"%>
 
-
 <link href="${pageContext.request.contextPath }/css/dashboard.css" rel="stylesheet">
+<script type="text/javascript">
+	$(function(){
+		var commentLen = 0;
+		$('#comments').on('keyup', function(){
+			commentLen = $(this).val().length;
+			if (commentLen > 500) {
+				commentLen = 500;
+			}
+			$('#commentLength').text(commentLen);
+		})
+		
+		$('#addComment').on('click', function(){
+			var comment = $('#comments').val();
+			alert(comment);
+			//폼태그에 넣어서 전송~!
+			
+		})
+		
+		
+	})
+</script>
 </head>
 <body>
 	<%@ include file="/layout/header.jsp" %>
@@ -32,14 +52,9 @@
 			
 			<c:if test="${boardVO.board_mem_id == MemberVO.mem_id}">
 				<a class="btn btn-sm btn-warning" href="boardUpdatePage?board_seq=${boardVO.board_seq}">게시글 수정</a>
-				
-				
 				<a class="btn btn-sm btn-danger" 
 				href="boardDelete?board_tboard_seq=${boardVO.board_tboard_seq}
 				&board_seq=${boardVO.board_seq}">게시글 삭제</a>
-				
-				
-				
 			</c:if>
 			<br><hr>
 			<div class="table-responsive">
@@ -69,6 +84,14 @@
 					<tr><td><a href="${pageContext.request.contextPath }/fileDown?fileName=${fileAddVOList[2].file_path }">${fileAddVOList[2].file_path }</a></td><td></td></tr>
 					<tr><td><a href="${pageContext.request.contextPath }/fileDown?fileName=${fileAddVOList[3].file_path }">${fileAddVOList[3].file_path }</a></td><td></td></tr>
 					<tr><td><a href="${pageContext.request.contextPath }/fileDown?fileName=${fileAddVOList[4].file_path }">${fileAddVOList[4].file_path }</a></td><td></td></tr>
+					
+					
+					<tr><td></td><td></td></tr>
+					<tr><th>댓글</th><td></td></tr>
+					<tr>
+						<th><p id="commentLength"></p> / 500<br><button type="button" id="addComment">댓글작성</button></th>
+						<td><textarea rows="5" cols="120" maxlength="500" id="comments"></textarea></td>
+					</tr>
 				</table>
 			</div>
 		</div>

@@ -80,7 +80,7 @@
 														<c:otherwise>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</c:otherwise>
 													</c:choose>
 												</c:forEach>
-												${boardVO.board_title }
+												삭제된 게시글입니다
 											</p>
 										</c:otherwise>
 									</c:choose>

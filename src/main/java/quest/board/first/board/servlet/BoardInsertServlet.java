@@ -1,7 +1,9 @@
 package quest.board.first.board.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -55,6 +57,24 @@ public class BoardInsertServlet extends HttpServlet {
 		}
 		
 		//파일 처리 부분
+		FileAddServiceInf fileAddService = FileAddService.getInstance();
+		List<FileAddVO> fileAddVOList = new ArrayList<FileAddVO>();
+		fileSetting(request, boardVO.getBoard_seq(), fileAddVOList);
+		for (FileAddVO fileAddVO : fileAddVOList) {
+			fileAddService.insertFileAdd(fileAddVO);
+		}
+		
+		
+		request.getSession().setAttribute("board_tboard_seq", board_tboard_seq);
+		response.sendRedirect(request.getContextPath() + "/boardList");
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+	private void fileSetting(HttpServletRequest request, String file_board_seq, List<FileAddVO> fileAddVOList) throws ServletException, IOException {
+		//파일 처리 부분
 		Collection<Part> parts = request.getParts();
 		for (Part part : parts) {
 			
@@ -66,37 +86,33 @@ public class BoardInsertServlet extends HttpServlet {
 				String[] headers = contentDisposition.split(";");
 				//form-data;
 				// name="file_path";
-				// filename="test.html"
+				// filename="test.html" or filename=""
 				
 				String fileName = null;
+				
 				for (String header : headers) {
-					if (header.startsWith(" filename=")) {
+					if (header.startsWith(" filename=\"\"")) {
+						break;
+					} else if (header.startsWith(" filename=")) {
 						fileName = header.substring(header.lastIndexOf("."), header.length()-1);
+						
+						fileName = UUID.randomUUID().toString() + fileName;
+						file_path = UPLOAD_PATH + "/" + fileName;
+						part.write(file_path);
+						part.delete();
+						
+						FileAddVO fileAddVO = new FileAddVO();
+						fileAddVO.setFile_board_seq(file_board_seq);
+						fileAddVO.setFile_path(fileName);
+						
+						fileAddVOList.add(fileAddVO);
+						
 						break;
 					}
 				}
-				
-				fileName = UUID.randomUUID().toString() + fileName;
-				file_path = UPLOAD_PATH + "/" + fileName;
-				part.write(file_path);
-				part.delete();
-				
-				FileAddVO fileAddVO = new FileAddVO();
-				String file_board_seq = boardVO.getBoard_seq();
-				fileAddVO.setFile_board_seq(file_board_seq);
-				fileAddVO.setFile_path(fileName);
-				
-				FileAddServiceInf fileAddService = FileAddService.getInstance();
-				fileAddService.insertFileAdd(fileAddVO);
 			}
 		}
-		
-		request.getSession().setAttribute("board_tboard_seq", board_tboard_seq);
-		response.sendRedirect(request.getContextPath() + "/boardList");
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+	
+	
 }

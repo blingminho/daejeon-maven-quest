@@ -23,10 +23,9 @@
 	</select>
 	
 	<!-- 해당 파일seq의 파일변경 -->
-	<update id="updateFileAdd" parameterType="FileAddVO">
-		UPDATE FILEADD
-		SET FILE_PATH = #{file_path}
-		WHERE FILE_SEQ = #{file_seq} AND FILE_BOARD_SEQ = #{file_board_seq} 
+	<update id="deleteFileAdd" parameterType="String">
+		DELETE FROM FILEADD
+		WHERE FILE_BOARD_SEQ = #{file_board_seq} 
 	</update>
 	
 </mapper>
